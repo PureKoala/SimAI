@@ -1,0 +1,59 @@
+{
+  "system-name": "GPU-Cluster-Latency-Test",
+  "scheduling-policy": "LIFO",
+  "endpoint-delay": "1us",
+  "active-chunks-per-dimension": 1,
+  "preferred-dataset-splits": 16,
+  "boost-mode": 0,
+  "all-reduce-implementation": "ring",
+  "all-gather-implementation": "ring", 
+  "reduce-scatter-implementation": "ring",
+  "all-to-all-implementation": "ring",
+  "collective-optimization": "baseline",
+  "intra-dimension-scheduling": "FIFO",
+  "inter-dimension-scheduling": "baseline",
+  "devices": [
+    {
+      "id": 0,
+      "device-type": "GPU",
+      "compute-capability": "100GFLOPS",
+      "memory-bandwidth": "1TB/s",
+      "memory-size": "80GB",
+      "network-links": [
+        {
+          "type": "NVLink",
+          "bandwidth": "300GB/s", 
+          "latency": "100ns",
+          "peer-device": 1
+        },
+        {
+          "type": "InfiniBand",
+          "bandwidth": "100GB/s",
+          "latency": "1us",
+          "network-interface": "ib0"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "device-type": "GPU", 
+      "compute-capability": "100GFLOPS",
+      "memory-bandwidth": "1TB/s",
+      "memory-size": "80GB",
+      "network-links": [
+        {
+          "type": "NVLink",
+          "bandwidth": "300GB/s",
+          "latency": "100ns", 
+          "peer-device": 0
+        },
+        {
+          "type": "InfiniBand",
+          "bandwidth": "100GB/s",
+          "latency": "1us",
+          "network-interface": "ib1"
+        }
+      ]
+    }
+  ]
+}

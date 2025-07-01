@@ -1,0 +1,6 @@
+# Point-to-Point Latency Test Workload  
+# Data size: 16384 bytes, GPUs: 2
+0: COMP(500,FWD,16384)
+1: SEND(16384,0,1) DEP(0)
+2: RECV(16384,1,0) DEP(1)
+3: COMP(500,BWD,16384) DEP(2)

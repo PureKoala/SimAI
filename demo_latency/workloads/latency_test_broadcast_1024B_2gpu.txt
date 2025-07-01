@@ -1,0 +1,5 @@
+# Broadcast Latency Test Workload
+# Data size: 1024 bytes, GPUs: 2
+0: COMP(500,FWD,1024)
+1: BROADCAST(1024,0,ALL) DEP(0)
+2: COMP(500,BWD,1024) DEP(1)

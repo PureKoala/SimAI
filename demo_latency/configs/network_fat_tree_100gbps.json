@@ -1,0 +1,14 @@
+{
+  "topology-name": "Fat-Tree",
+  "topology-type": "fat-tree",
+  "dimensions": [
+    4,
+    4,
+    4
+  ],
+  "link-bandwidth": "100GB/s",
+  "link-latency": "1000ns",
+  "router-latency": "100ns",
+  "hca-latency": "200ns",
+  "packet-size": "1KB"
+}
