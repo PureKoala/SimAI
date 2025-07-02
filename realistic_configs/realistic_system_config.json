@@ -1,0 +1,162 @@
+{
+  "system-name": "H100-SuperPOD-Realistic-Config",
+  "description": "基于 NVIDIA DGX H100 SuperPOD 的现实配置",
+  "scheduling-policy": "FIFO",
+  "endpoint-delay": "500ns",
+  "active-chunks-per-dimension": 4,
+  "preferred-dataset-splits": 32,
+  "boost-mode": 1,
+  
+  "collective-algorithms": {
+    "all-reduce-implementation": "ring",
+    "all-gather-implementation": "ring", 
+    "reduce-scatter-implementation": "ring",
+    "all-to-all-implementation": "direct",
+    "collective-optimization": "nccl-tuned"
+  },
+  
+  "scheduling": {
+    "intra-dimension-scheduling": "FIFO",
+    "inter-dimension-scheduling": "round-robin"
+  },
+  
+  "hardware-cluster": {
+    "nodes": 256,
+    "gpus-per-node": 8,
+    "total-gpus": 2048,
+    "node-interconnect": "InfiniBand-NDR",
+    "intra-node-interconnect": "NVLink4"
+  },
+  
+  "gpu-specifications": [
+    {
+      "id": "H100-SXM",
+      "device-type": "GPU",
+      "architecture": "Hopper",
+      "compute-capability": "9.0",
+      "peak-performance": "1979 TFLOPS (FP16)",
+      "memory-type": "HBM3",
+      "memory-size": "80GB",
+      "memory-bandwidth": "3.35TB/s",
+      "memory-latency": "150ns",
+      
+      "intra-node-links": [
+        {
+          "type": "NVLink4",
+          "links-per-gpu": 18,
+          "bandwidth-per-link": "50GB/s",
+          "total-bandwidth": "900GB/s",
+          "latency": "25ns",
+          "topology": "fully-connected"
+        }
+      ],
+      
+      "inter-node-connectivity": [
+        {
+          "type": "InfiniBand-NDR",
+          "ports-per-gpu": 8,
+          "bandwidth-per-port": "400Gbps",
+          "effective-bandwidth": "45GB/s",
+          "latency": "1000ns",
+          "rdma-latency": "700ns"
+        }
+      ]
+    }
+  ],
+  
+  "network-topology": {
+    "type": "Fat-Tree-CLOS",
+    "levels": 3,
+    "leaf-switches": 64,
+    "spine-switches": 32,
+    "ports-per-switch": 64,
+    
+    "link-specifications": [
+      {
+        "level": "server-to-leaf",
+        "bandwidth": "400Gbps",
+        "latency": "500ns",
+        "buffer-size": "64MB"
+      },
+      {
+        "level": "leaf-to-spine", 
+        "bandwidth": "400Gbps",
+        "latency": "800ns",
+        "buffer-size": "128MB"
+      },
+      {
+        "level": "spine-to-spine",
+        "bandwidth": "400Gbps", 
+        "latency": "1200ns",
+        "buffer-size": "256MB"
+      }
+    ]
+  },
+  
+  "workload-characteristics": {
+    "model-type": "Large Language Model",
+    "model-parameters": "175B",
+    "sequence-length": 2048,
+    "vocabulary-size": 50400,
+    "layers": 96,
+    "hidden-size": 12288,
+    "attention-heads": 96,
+    
+    "parallelism-strategy": {
+      "tensor-parallel": 8,
+      "pipeline-parallel": 8, 
+      "data-parallel": 32,
+      "expert-parallel": 1
+    },
+    
+    "communication-patterns": [
+      {
+        "operation": "forward-allgather",
+        "frequency": "per-layer",
+        "data-type": "activations",
+        "typical-size": "16MB"
+      },
+      {
+        "operation": "backward-reducescatter",
+        "frequency": "per-layer", 
+        "data-type": "gradients",
+        "typical-size": "16MB"
+      },
+      {
+        "operation": "gradient-allreduce",
+        "frequency": "per-microbatch",
+        "data-type": "gradients",
+        "typical-size": "700MB"
+      },
+      {
+        "operation": "pipeline-p2p",
+        "frequency": "continuous",
+        "data-type": "activations/gradients",
+        "typical-size": "32MB"
+      }
+    ]
+  },
+  
+  "performance-expectations": {
+    "peak-allreduce-bandwidth": {
+      "intra-node": "280 GB/s",
+      "inter-node": "45 GB/s"
+    },
+    "typical-latencies": {
+      "small-message": "20-50 μs",
+      "large-message": "100-500 μs"
+    },
+    "efficiency-factors": {
+      "nccl-efficiency": 0.85,
+      "network-utilization": 0.75,
+      "overlap-efficiency": 0.6
+    }
+  },
+  
+  "environmental-factors": {
+    "background-traffic": 0.1,
+    "thermal-throttling": false,
+    "power-management": "performance",
+    "numa-topology": "optimized"
+  }
+}

@@ -1,0 +1,55 @@
+# 现实世界 GPU 集群通信带宽配置
+# 基于 H100 SXM + InfiniBand NDR 实测数据
+# 参考 NVIDIA DGX H100 和超算中心性能基准
+
+realistic_h100_cluster:
+
+# Tensor Parallelism (同一节点内 NVLink 连接)
+TP:
+  allreduce: 280      # H100 NVLink AllReduce 实测带宽 ~280 GB/s
+  allgather: 320      # AllGather 通常比 AllReduce 稍快
+  reducescatter: 320  # ReduceScatter 与 AllGather 类似
+  alltoall: 250       # AllToAll 开销较大
+
+# Data Parallelism (跨节点 InfiniBand 连接)  
+DP:
+  allreduce: 45       # 跨节点 AllReduce，受网络带宽限制 ~45 GB/s
+  allgather: 50       # AllGather 并行度更高
+  reducescatter: 50   # ReduceScatter 并行度更高
+  alltoall: 35        # AllToAll 通信复杂度高
+
+# Expert Parallelism (MoE 模型专用)
+EP:
+  allreduce: 40       # Expert 间 AllReduce
+  allgather: 42       # Expert Gather
+  reducescatter: 42   # Expert Scatter  
+  alltoall: 38        # Expert 路由，最复杂的通信模式
+
+# Pipeline Parallelism (流水线阶段间通信)
+PP:
+  busbw: 35           # Pipeline 气泡填充带宽，通常较保守
+
+# 混合并行 (DP + EP 组合)
+DP_EP:
+  allreduce: 30       # 双层 hierarchy 带来额外开销
+  allgather: 35
+  reducescatter: 35
+  alltoall: 25
+
+# 网络拓扑相关的性能调优
+network_topology_factors:
+  intra_rack_multiplier: 1.0        # 机架内通信无额外开销
+  inter_rack_multiplier: 0.8        # 跨机架 20% 性能损失
+  cross_pod_multiplier: 0.6         # 跨 Pod 40% 性能损失
+  
+# 消息大小相关的性能调优  
+message_size_scaling:
+  small_message_penalty: 0.5        # < 64KB 消息延迟主导
+  medium_message_optimal: 1.0       # 64KB - 4MB 最优性能区间
+  large_message_bandwidth: 0.9      # > 4MB 带宽利用率略降
+
+# 负载相关的性能调优
+workload_factors:
+  light_load_multiplier: 1.1        # 轻负载时性能更好
+  heavy_load_multiplier: 0.8        # 重负载时有争用
+  bursty_traffic_penalty: 0.7       # 突发流量性能下降

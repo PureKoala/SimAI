@@ -1,0 +1,17 @@
+{
+  "analytical": {
+    "total_time": 45.67,
+    "communication_time": 12.34,
+    "computation_time": 28.92
+  },
+  "ns3": {
+    "avg_latency": 0.125,
+    "max_latency": 0.567,
+    "total_bytes": 2048576000.0
+  },
+  "metadata": {
+    "model": "GPT-3 175B",
+    "gpus": 2048,
+    "parallelism": "TP=8, PP=8, DP=32"
+  }
+}

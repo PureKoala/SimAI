@@ -1,0 +1,89 @@
+{
+  "description": "GPU-to-GPU communication hardware latency breakdown configuration",
+  "hardware_components": [
+    {
+      "component": "GPU Kernel Launch",
+      "latency_us": 5.2,
+      "description": "Time to launch communication kernel on source GPU",
+      "category": "Computation"
+    },
+    {
+      "component": "GPU Memory Copy",
+      "latency_us": 12.8,
+      "description": "Copy data from GPU memory to host buffer",
+      "category": "Memory"
+    },
+    {
+      "component": "Host Buffer Setup",
+      "latency_us": 2.1,
+      "description": "Prepare host memory buffer for transfer",
+      "category": "Memory"
+    },
+    {
+      "component": "PCIe Transfer",
+      "latency_us": 45.6,
+      "description": "Data transfer over PCIe bus to NIC",
+      "category": "PCIe"
+    },
+    {
+      "component": "NIC Processing",
+      "latency_us": 8.3,
+      "description": "Network interface card packet processing",
+      "category": "NIC"
+    },
+    {
+      "component": "Ethernet TX",
+      "latency_us": 15.7,
+      "description": "Ethernet transmission to network switch",
+      "category": "Network"
+    },
+    {
+      "component": "Switch Latency",
+      "latency_us": 3.4,
+      "description": "Network switch forwarding latency",
+      "category": "Network"
+    },
+    {
+      "component": "Ethernet RX",
+      "latency_us": 12.1,
+      "description": "Ethernet reception at destination",
+      "category": "Network"
+    },
+    {
+      "component": "Dest NIC Processing",
+      "latency_us": 7.9,
+      "description": "Destination NIC packet processing",
+      "category": "NIC"
+    },
+    {
+      "component": "Dest PCIe Transfer",
+      "latency_us": 38.2,
+      "description": "PCIe transfer to destination GPU",
+      "category": "PCIe"
+    },
+    {
+      "component": "Dest GPU Memory Copy",
+      "latency_us": 11.4,
+      "description": "Copy data to destination GPU memory",
+      "category": "Memory"
+    },
+    {
+      "component": "GPU Kernel Complete",
+      "latency_us": 3.8,
+      "description": "Complete communication kernel on dest GPU",
+      "category": "Computation"
+    }
+  ],
+  "notes": [
+    "All latency values are in microseconds (\u03bcs)",
+    "These values are examples based on H100 + NDR InfiniBand setup",
+    "Modify these values based on your actual hardware measurements",
+    "You can add or remove components as needed for your specific setup"
+  ],
+  "measurement_tips": [
+    "Use NVIDIA Nsight Systems to measure GPU kernel times",
+    "Use PCIe bandwidth tools to measure bus transfer latency",
+    "Use network ping tools to measure network round-trip times",
+    "Consider using NCCL profiling tools for end-to-end measurements"
+  ]
+}

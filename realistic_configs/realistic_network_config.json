@@ -1,0 +1,90 @@
+{
+  "network-name": "H100-SuperPOD-NDR-Network",
+  "topology-type": "Fat-Tree-CLOS",
+  "total-nodes": 256,
+  "gpus-per-node": 8,
+  "description": "基于真实 H100 SuperPOD 的网络配置",
+  
+  "physical-topology": {
+    "racks": 32,
+    "servers-per-rack": 8,
+    "gpus-per-server": 8,
+    "leaf-switches-per-rack": 2,
+    "spine-switches": 16,
+    "super-spine-switches": 4
+  },
+  
+  "link-bandwidth": "400Gbps",
+  "link-latency": "500ns",
+  "switch-latency": "300ns",
+  "end-to-end-latency": "2000ns",
+  
+  "routing-algorithm": "ECMP",
+  "congestion-control": "DCQCN",
+  "flow-control": "PFC",
+  
+  "qos-configuration": {
+    "priority-levels": 8,
+    "traffic-classes": [
+      {
+        "class": "bulk-data",
+        "priority": 0,
+        "percentage": 60
+      },
+      {
+        "class": "latency-sensitive", 
+        "priority": 7,
+        "percentage": 20
+      },
+      {
+        "class": "control-plane",
+        "priority": 6, 
+        "percentage": 5
+      },
+      {
+        "class": "best-effort",
+        "priority": 1,
+        "percentage": 15
+      }
+    ]
+  },
+  
+  "buffer-configuration": {
+    "leaf-switch-buffer": "64MB",
+    "spine-switch-buffer": "128MB", 
+    "super-spine-buffer": "256MB",
+    "shared-buffer-ratio": 0.8,
+    "reserved-buffer-ratio": 0.2
+  },
+  
+  "performance-parameters": {
+    "max-throughput": "25.6Tbps",
+    "bisection-bandwidth": "12.8Tbps",
+    "oversubscription-ratio": "1:1",
+    "typical-utilization": 0.65,
+    "tail-latency-99p": "10000ns"
+  },
+  
+  "rdma-configuration": {
+    "max-qps-per-port": 256,
+    "max-cqs-per-port": 64,
+    "max-mrs-per-port": 1024,
+    "inline-threshold": 64,
+    "max-sge": 30,
+    "atomic-operations": true
+  },
+  
+  "adaptive-routing": {
+    "enabled": true,
+    "algorithm": "DLB",
+    "load-balancing": "packet-spraying",
+    "reorder-timeout": "100us"
+  },
+  
+  "failure-resilience": {
+    "link-failure-recovery": "1ms",
+    "switch-failure-recovery": "10ms", 
+    "redundant-paths": 4,
+    "graceful-degradation": true
+  }
+}
