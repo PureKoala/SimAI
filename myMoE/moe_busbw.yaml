@@ -1,0 +1,109 @@
+# MoE专用通信带宽配置 - 支持通信计算交叠优化
+# 基于 H100 集群与 MoE 框架优化的实测数据
+
+moe_optimized_cluster:
+
+# Tensor Parallelism (专家内部并行)
+TP:
+  allreduce: 320      # 专家内AllReduce，NVLink优化
+  allgather: 350      # Expert内参数聚合
+  reducescatter: 350  # Expert内梯度分散
+  alltoall: 280       # Expert内路由交换
+  overlap_efficiency: 0.85  # TP层通信计算重叠效率
+
+# Data Parallelism (跨专家数据并行)  
+DP:
+  allreduce: 55       # 跨节点梯度同步
+  allgather: 60       # 参数广播 
+  reducescatter: 60   # 梯度分散
+  alltoall: 45        # 数据重分布
+  overlap_efficiency: 0.75  # DP层重叠效率
+
+# Expert Parallelism (MoE专家并行)
+EP:
+  allreduce: 48       # 专家间梯度同步
+  allgather: 52       # 专家参数收集
+  reducescatter: 52   # 专家梯度分散  
+  alltoall: 42        # 专家路由，最关键的MoE通信
+  overlap_efficiency: 0.90  # EP层重叠效率最高
+
+# Pipeline Parallelism (流水线并行)
+PP:
+  busbw: 40           # 流水线阶段间通信
+  overlap_efficiency: 0.65  # PP层重叠相对较低
+
+# MoE专用组合并行模式
+DP_EP:
+  allreduce: 35       # DP+EP组合的AllReduce 
+  allgather: 40       # DP+EP组合的AllGather
+  reducescatter: 40   # DP+EP组合的ReduceScatter
+  alltoall: 30        # DP+EP组合的AllToAll，开销最大
+  overlap_efficiency: 0.70  # 组合模式重叠效率
+
+TP_EP:
+  allreduce: 45       # TP+EP组合
+  allgather: 50
+  reducescatter: 50
+  alltoall: 38
+  overlap_efficiency: 0.80
+
+# MoE特有的通信模式优化
+moe_routing_optimization:
+  expert_discovery_bw: 60     # 专家发现阶段带宽
+  token_routing_bw: 45        # Token路由带宽
+  expert_output_gather_bw: 55 # 专家输出聚合带宽
+  load_balancing_bw: 35       # 负载均衡通信带宽
+
+# 重叠优化相关参数
+overlap_parameters:
+  # 计算强度对重叠效率的影响
+  compute_intensity_factor:
+    low: 0.6      # 计算轻量时重叠效率较低
+    medium: 0.8   # 中等计算强度最优
+    high: 0.9     # 计算密集时重叠效率最高
+  
+  # 消息大小对重叠的影响  
+  message_size_overlap:
+    small_msg: 0.5    # < 1MB，延迟主导，重叠有限
+    medium_msg: 0.85  # 1MB-64MB，最佳重叠区间  
+    large_msg: 0.75   # > 64MB，带宽主导，重叠降低
+    
+  # 网络拓扑对重叠的影响
+  topology_overlap_factor:
+    intra_node: 0.95   # 节点内重叠效率最高
+    intra_rack: 0.80   # 机架内重叠效率良好
+    inter_rack: 0.65   # 跨机架重叠效率下降
+    cross_pod: 0.50    # 跨Pod重叠效率最低
+
+# MoE专用调度策略对应的带宽调整
+scheduling_strategy_bw:
+  aggressive_overlap:
+    multiplier: 1.15    # 激进重叠策略提升15%
+    latency_penalty: 0.05  # 但增加5%延迟开销
+    
+  conservative_overlap:
+    multiplier: 1.05    # 保守重叠策略提升5%  
+    latency_penalty: 0.02  # 延迟开销较小
+    
+  max_overlap:
+    multiplier: 1.25    # 最大重叠提升25%
+    latency_penalty: 0.10  # 但延迟开销较大
+    
+  no_overlap:
+    multiplier: 1.0     # 无重叠基准性能
+    latency_penalty: 0.0
+
+# 专家负载均衡对通信性能的影响
+expert_load_balancing:
+  perfect_balance: 1.0     # 完美负载均衡
+  slight_imbalance: 0.9    # 轻微不均衡
+  moderate_imbalance: 0.75 # 中等不均衡
+  severe_imbalance: 0.5    # 严重不均衡
+
+# 动态调整参数
+dynamic_optimization:
+  adaptive_overlap: true        # 启用自适应重叠
+  runtime_profiling: true       # 启用运行时性能分析
+  auto_tuning: true            # 启用自动调优
+  overlap_threshold: "4MB"     # 重叠阈值
+  max_concurrent_comms: 4      # 最大并发通信数量

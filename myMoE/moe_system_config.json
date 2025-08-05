@@ -1,0 +1,176 @@
+{
+  "system-name": "MoE-Overlap-Analysis-Config",
+  "description": "MoE框架通信计算交叠分析配置",
+  "scheduling-policy": "FIFO",
+  "endpoint-delay": "200ns",
+  "active-chunks-per-dimension": 8,
+  "preferred-dataset-splits": 16,
+  "boost-mode": 1,
+  
+  "collective-algorithms": {
+    "all-reduce-implementation": "ring",
+    "all-gather-implementation": "halving-doubling", 
+    "reduce-scatter-implementation": "ring",
+    "all-to-all-implementation": "direct",
+    "collective-optimization": "overlap-aware"
+  },
+  
+  "scheduling": {
+    "overlap_strategy": "aggressive",
+    "compute_granularity": "kernel",
+    "communication_granularity": "message",
+    "intra-dimension-scheduling": "SmallestFirst",
+    "inter-dimension-scheduling": "OnlineGreedy"
+  },
+  
+  "runtime": {
+    "compute_threads": 8,
+    "communication_threads": 4,
+    "overlap_buffer_size": "256MB",
+    "pipeline_depth": 4
+  },
+  
+  "overlap-configuration": {
+    "enable_compute_comm_overlap": true,
+    "overlap_techniques": [
+      "double_buffering",
+      "pipeline_parallelism", 
+      "async_communication",
+      "kernel_fusion"
+    ],
+    "overlap_ratios": {
+      "TP": 0.85,
+      "DP": 0.75,
+      "EP": 0.90,
+      "PP": 0.65
+    },
+    "memory_pool": {
+      "pinned_memory_size": "2GB",
+      "staging_buffer_size": "512MB",
+      "communication_buffer_count": 4
+    }
+  },
+  
+  "moe-specific": {
+    "num_experts": 128,
+    "experts_per_gpu": 16,
+    "expert_capacity_factor": 1.25,
+    "top_k": 2,
+    "routing_algorithm": "hash",
+    "load_balancing": "switch_transformer",
+    "expert_parallelism_degree": 8,
+    "expert_communication_pattern": "all_to_all"
+  },
+  
+  "hardware-cluster": {
+    "nodes": 64,
+    "gpus-per-node": 8,
+    "total-gpus": 512,
+    "node-interconnect": "InfiniBand-NDR",
+    "intra-node-interconnect": "NVLink4"
+  },
+  
+  "gpu-specifications": [
+    {
+      "id": "H100-SXM-MoE",
+      "device-type": "GPU",
+      "architecture": "Hopper",
+      "compute-capability": "9.0",
+      "peak-performance": "1979 TFLOPS (FP16)",
+      "memory-type": "HBM3",
+      "memory-size": "80GB",
+      "memory-bandwidth": "3.35TB/s",
+      "memory-latency": "150ns",
+      "compute-latency": "100ns",
+      
+      "intra-node-links": [
+        {
+          "type": "NVLink4",
+          "links-per-gpu": 18,
+          "bandwidth-per-link": "50GB/s",
+          "total-bandwidth": "900GB/s",
+          "latency": "25ns",
+          "topology": "fully-connected",
+          "overlap-capability": true
+        }
+      ],
+      
+      "inter-node-links": [
+        {
+          "type": "InfiniBand-NDR",
+          "links-per-gpu": 8,
+          "bandwidth-per-link": "50GB/s", 
+          "total-bandwidth": "400GB/s",
+          "latency": "1000ns",
+          "protocol-overhead": "200ns",
+          "overlap-capability": true
+        }
+      ]
+    }
+  ],
+  
+  "communication-overlap-parameters": {
+    "kernel-level-overlap": {
+      "enabled": true,
+      "overlap-threshold": "1MB",
+      "max-concurrent-kernels": 4,
+      "priority-scheduling": true
+    },
+    
+    "message-level-overlap": {
+      "enabled": true,
+      "chunk-size": "64MB", 
+      "pipeline-stages": 4,
+      "double-buffering": true
+    },
+    
+    "tensor-level-overlap": {
+      "enabled": true,
+      "tensor-chunking": true,
+      "chunk-granularity": "16MB",
+      "prefetch-enabled": true
+    }
+  },
+  
+  "performance-modeling": {
+    "overlap-efficiency": {
+      "computation-bound": 0.95,
+      "communication-bound": 0.80,
+      "memory-bound": 0.70
+    },
+    
+    "synchronization-overhead": {
+      "barrier-latency": "50ns",
+      "lock-contention": "10ns",
+      "cache-coherency": "20ns"
+    }
+  },
+  
+  "dimensions-enabled": 4,
+  "dimensions": [
+    {
+      "name": "TP",
+      "id": 0,
+      "units-count": 8,
+      "scheduling-policy": "SmallestFirst"
+    },
+    {
+      "name": "DP", 
+      "id": 1,
+      "units-count": 8,
+      "scheduling-policy": "FIFO"
+    },
+    {
+      "name": "EP",
+      "id": 2, 
+      "units-count": 8,
+      "scheduling-policy": "RoundRobin"
+    },
+    {
+      "name": "PP",
+      "id": 3,
+      "units-count": 8,
+      "scheduling-policy": "FIFO"
+    }
+  ]
+}

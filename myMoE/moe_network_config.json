@@ -1,0 +1,193 @@
+{
+  "network-name": "MoE-Optimized-Network",
+  "description": "为MoE框架优化的网络配置，支持通信计算重叠",
+  
+  "topology": {
+    "type": "hierarchical-fat-tree",
+    "levels": 3,
+    "oversubscription": "1:1",
+    "moe-optimized": true
+  },
+  
+  "switches": {
+    "leaf-switches": {
+      "count": 64,
+      "ports": 64,
+      "buffer-size": "32MB",
+      "type": "Spectrum-4"
+    },
+    "spine-switches": {
+      "count": 16, 
+      "ports": 256,
+      "buffer-size": "128MB",
+      "type": "Spectrum-X"
+    },
+    "super-spine-switches": {
+      "count": 4,
+      "ports": 1024, 
+      "buffer-size": "512MB",
+      "type": "Spectrum-X"
+    }
+  },
+  
+  "links": {
+    "intra-node": {
+      "technology": "NVLink4",
+      "bandwidth": "50GB/s",
+      "latency": "25ns",
+      "count": 18,
+      "full-duplex": true,
+      "overlap-support": true
+    },
+    
+    "inter-node-intra-rack": {
+      "technology": "InfiniBand-NDR", 
+      "bandwidth": "50GB/s",
+      "latency": "500ns",
+      "count": 8,
+      "full-duplex": true,
+      "overlap-support": true
+    },
+    
+    "inter-rack": {
+      "technology": "InfiniBand-NDR",
+      "bandwidth": "50GB/s", 
+      "latency": "1000ns",
+      "count": 4,
+      "full-duplex": true,
+      "overlap-support": true
+    }
+  },
+  
+  "network-protocols": {
+    "rdma": {
+      "enabled": true,
+      "protocol": "RoCEv2",
+      "mtu": "4KB",
+      "retransmission-timeout": "100us",
+      "overlap-capable": true
+    },
+    
+    "tcp": {
+      "enabled": false,
+      "fallback": true
+    },
+    
+    "nccl": {
+      "version": "2.19",
+      "tree-threshold": "8KB",
+      "ring-threshold": "256KB", 
+      "overlap-enabled": true,
+      "async-kernels": true
+    }
+  },
+  
+  "moe-network-optimization": {
+    "expert-placement-aware": true,
+    "token-routing-optimization": true,
+    "load-balancing-support": true,
+    "adaptive-routing": true,
+    
+    "expert-groups": {
+      "intra-expert-bandwidth": "900GB/s",
+      "inter-expert-bandwidth": "400GB/s", 
+      "expert-discovery-latency": "200ns",
+      "token-routing-latency": "150ns"
+    },
+    
+    "communication-patterns": {
+      "all-to-all-optimization": true,
+      "gather-scatter-fusion": true,
+      "routing-table-caching": true,
+      "predictive-prefetching": true
+    }
+  },
+  
+  "overlap-network-features": {
+    "multi-rail": {
+      "enabled": true,
+      "rails-per-connection": 4,
+      "load-balancing": "round-robin"
+    },
+    
+    "pipeline-support": {
+      "enabled": true,
+      "depth": 8,
+      "chunk-size": "16MB"
+    },
+    
+    "async-progress": {
+      "enabled": true,
+      "progress-threads": 2,
+      "completion-polling": "adaptive"
+    },
+    
+    "memory-registration": {
+      "pre-registered-pools": true,
+      "pool-size": "1GB",
+      "lazy-deregistration": true
+    }
+  },
+  
+  "qos-configuration": {
+    "traffic-classes": {
+      "expert-routing": {
+        "priority": "high",
+        "bandwidth-guarantee": "40%",
+        "latency-target": "10us"
+      },
+      
+      "gradient-synchronization": {
+        "priority": "medium",
+        "bandwidth-guarantee": "30%", 
+        "latency-target": "50us"
+      },
+      
+      "parameter-updates": {
+        "priority": "medium",
+        "bandwidth-guarantee": "20%",
+        "latency-target": "100us"
+      },
+      
+      "control-messages": {
+        "priority": "highest",
+        "bandwidth-guarantee": "10%",
+        "latency-target": "1us"
+      }
+    }
+  },
+  
+  "congestion-control": {
+    "algorithm": "DCQCN",
+    "parameters": {
+      "kmin": 80,
+      "kmax": 500,
+      "pmax": 0.01,
+      "dcqcn-g": 0.00390625,
+      "dcqcn-ai": 5,
+      "dcqcn-hai": 50
+    },
+    
+    "moe-specific": {
+      "expert-traffic-shaping": true,
+      "adaptive-ecn-marking": true,
+      "load-aware-routing": true
+    }
+  },
+  
+  "performance-monitoring": {
+    "overlap-metrics": {
+      "compute-utilization": true,
+      "communication-utilization": true, 
+      "overlap-efficiency": true,
+      "idle-time-analysis": true
+    },
+    
+    "moe-metrics": {
+      "expert-load-balance": true,
+      "token-routing-efficiency": true,
+      "expert-discovery-latency": true,
+      "cross-expert-bandwidth": true
+    }
+  }
+}
