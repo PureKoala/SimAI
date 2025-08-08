@@ -1,0 +1,1731 @@
+{
+    "model_name": "Qwen3-30B",
+    "model_params": {
+        "name": "Qwen3-30B",
+        "hidden_size": 2048,
+        "num_attention_heads": 32,
+        "num_kv_heads": 4,
+        "head_dim": 128,
+        "num_hidden_layers": 48,
+        "intermediate_size": 6144,
+        "moe_intermediate_size": 768,
+        "num_experts": 128,
+        "active_experts_per_token": 8,
+        "activation_function": "silu",
+        "rms_norm_eps": 1e-06,
+        "vocab_size": 151936,
+        "data_type": "bfloat16"
+    },
+    "parallel_config": {
+        "data_parallel": {
+            "degree": 4,
+            "input_split_axis": 0,
+            "output_split_axis": 0,
+            "communication_pattern": "all_reduce"
+        },
+        "expert_parallel": {
+            "degree": 4,
+            "num_experts": 128,
+            "experts_per_gpu": 32,
+            "active_experts_per_token": 8,
+            "communication_pattern": "all_to_all"
+        },
+        "attention": {
+            "parallel_mode": "data_parallel",
+            "heads": 32,
+            "kv_heads": 4,
+            "head_dim": 128
+        },
+        "ffn": {
+            "parallel_mode": "expert_parallel",
+            "moe_enabled": true,
+            "hidden_size": 2048,
+            "intermediate_size": 6144,
+            "expert_intermediate_size": 768
+        }
+    },
+    "batch_size": 16,
+    "seq_length": 2048,
+    "layers": [
+        {
+            "layer_id": 0,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 1,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 2,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 3,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 4,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 5,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 6,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 7,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 8,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 9,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 10,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 11,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 12,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 13,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 14,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 15,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 16,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 17,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 18,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 19,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 20,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 21,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 22,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 23,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 24,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 25,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 26,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 27,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 28,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 29,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 30,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 31,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 32,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 33,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 34,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 35,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 36,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 37,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 38,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 39,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 40,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 41,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 42,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 43,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 44,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 45,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 46,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "layer_id": 47,
+            "operations": [
+                {
+                    "op_type": "attention_forward",
+                    "compute_time_ms": 2.5,
+                    "parallel_mode": "data_parallel",
+                    "communication": {
+                        "type": "all_reduce",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                },
+                {
+                    "op_type": "moe_forward",
+                    "compute_time_ms": 3.8,
+                    "parallel_mode": "expert_parallel",
+                    "communication": {
+                        "type": "all_to_all",
+                        "size_bytes": 67108864,
+                        "participants": [
+                            0,
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

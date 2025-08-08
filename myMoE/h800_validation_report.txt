@@ -1,0 +1,50 @@
+H800 MoE配置验证报告
+==================================================
+
+验证时间: Wed Aug  6 19:15:37 CST 2025
+配置目录: /home/bytedance/SimAI/myMoE
+
+System Config
+-------------
+✓ GPU Count: GPU数量正确: 4
+✓ GPU Type: GPU类型正确: NVIDIA H800 80GB HBM3
+✓ Layer Parallelism: 层特定并行度正确: Attention_DP=4, FFN_EP=4 (共享4个GPU)
+✓ Workload Type: 工作负载类型正确: moe_inference
+✓ qwen3_235b Layers: 层数正确: 84
+✓ qwen3_235b Experts: 专家数正确: 128
+✓ qwen3_30b Layers: 层数正确: 48
+✓ qwen3_30b Experts: 专家数正确: 128
+✓ phi_mini_moe Layers: 层数正确: 32
+✓ phi_mini_moe Experts: 专家数正确: 16
+
+Network Config
+--------------
+✓ Topology Type: 拓扑类型正确: single-node
+✓ PCIe Generation: PCIe版本正确: 5.0
+✓ Network Bandwidth: 网络带宽正确: 400Gbps
+✓ Overlap Enabled: 重叠优化已启用
+
+Bandwidth Config
+----------------
+✓ Attention DP4 AllReduce: Attention DP4 AllReduce带宽合理: 35.0 GB/s
+✓ FFN EP4 AlltoAll: FFN EP4 AlltoAll带宽已配置: 35.0 GB/s
+
+Workload Files
+--------------
+✓ moe_layerwise_workload_h800.txt: 包含H800相关配置
+✓ moe_layerwise_workload_h800.txt Type: 工作负载类型为推理
+✓ moe_inference_workload_h800.txt: 包含H800相关配置
+✓ moe_inference_workload_h800.txt Type: 工作负载类型为推理
+
+Memory Requirements
+-------------------
+✓ qwen3_235b Memory: 内存需求合理: 5.0GB/GPU < 80GB
+✓ qwen3_30b Memory: 内存需求合理: 1.6GB/GPU < 80GB
+✓ phi_mini_moe Memory: 内存需求合理: 0.8GB/GPU < 80GB
+
+验证统计
+--------
+总检查项: 23
+通过: 23
+失败: 0
+警告: 0

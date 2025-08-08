@@ -1,0 +1,123 @@
+{
+    "name": "4_H800_IBGDA_400Gbps_FullyConnected",
+    "nodes": [
+        {
+            "id": 0,
+            "type": "gpu",
+            "name": "H800_GPU_0",
+            "nics": [
+                {
+                    "id": 0,
+                    "type": "ibgda",
+                    "name": "nic_0",
+                    "bandwidth": 53687091200.0,
+                    "latency": 1.5e-06
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "type": "gpu",
+            "name": "H800_GPU_1",
+            "nics": [
+                {
+                    "id": 0,
+                    "type": "ibgda",
+                    "name": "nic_1",
+                    "bandwidth": 53687091200.0,
+                    "latency": 1.5e-06
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "type": "gpu",
+            "name": "H800_GPU_2",
+            "nics": [
+                {
+                    "id": 0,
+                    "type": "ibgda",
+                    "name": "nic_2",
+                    "bandwidth": 53687091200.0,
+                    "latency": 1.5e-06
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "type": "gpu",
+            "name": "H800_GPU_3",
+            "nics": [
+                {
+                    "id": 0,
+                    "type": "ibgda",
+                    "name": "nic_3",
+                    "bandwidth": 53687091200.0,
+                    "latency": 1.5e-06
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "id": 0,
+            "name": "link_0_1",
+            "src_node": 0,
+            "src_nic": 0,
+            "dst_node": 1,
+            "dst_nic": 0,
+            "bandwidth": 53687091200.0,
+            "latency": 1.5e-06
+        },
+        {
+            "id": 1,
+            "name": "link_0_2",
+            "src_node": 0,
+            "src_nic": 0,
+            "dst_node": 2,
+            "dst_nic": 0,
+            "bandwidth": 53687091200.0,
+            "latency": 1.5e-06
+        },
+        {
+            "id": 2,
+            "name": "link_0_3",
+            "src_node": 0,
+            "src_nic": 0,
+            "dst_node": 3,
+            "dst_nic": 0,
+            "bandwidth": 53687091200.0,
+            "latency": 1.5e-06
+        },
+        {
+            "id": 3,
+            "name": "link_1_2",
+            "src_node": 1,
+            "src_nic": 0,
+            "dst_node": 2,
+            "dst_nic": 0,
+            "bandwidth": 53687091200.0,
+            "latency": 1.5e-06
+        },
+        {
+            "id": 4,
+            "name": "link_1_3",
+            "src_node": 1,
+            "src_nic": 0,
+            "dst_node": 3,
+            "dst_nic": 0,
+            "bandwidth": 53687091200.0,
+            "latency": 1.5e-06
+        },
+        {
+            "id": 5,
+            "name": "link_2_3",
+            "src_node": 2,
+            "src_nic": 0,
+            "dst_node": 3,
+            "dst_nic": 0,
+            "bandwidth": 53687091200.0,
+            "latency": 1.5e-06
+        }
+    ]
+}

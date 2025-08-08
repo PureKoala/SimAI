@@ -1,0 +1,65 @@
+{
+    "model": {
+        "name": "Qwen3-30B",
+        "hidden_size": 2048,
+        "num_attention_heads": 32,
+        "num_kv_heads": 4,
+        "head_dim": 128,
+        "num_hidden_layers": 48,
+        "intermediate_size": 6144,
+        "moe_intermediate_size": 768,
+        "num_experts": 128,
+        "active_experts_per_token": 8,
+        "activation_function": "silu",
+        "rms_norm_eps": 1e-06,
+        "vocab_size": 151936,
+        "data_type": "bfloat16"
+    },
+    "batch_size": 16,
+    "seq_length": 2048,
+    "gpu_params": {
+        "num_sm": 132,
+        "max_threads_per_sm": 2048,
+        "max_blocks_per_sm": 32,
+        "max_shared_memory_per_sm": 167936,
+        "max_registers_per_sm": 65536,
+        "memory_clock_rate": 1215000000,
+        "memory_bus_width": 5120,
+        "l2_cache_size": 53477376,
+        "global_memory_size": 85899345920,
+        "clock_rate": 1755000000,
+        "tensor_core_performance": 989,
+        "compute_capability_major": 9,
+        "compute_capability_minor": 0
+    },
+    "parallel_config": {
+        "data_parallel": {
+            "degree": 4,
+            "input_split_axis": 0,
+            "output_split_axis": 0,
+            "communication_pattern": "all_reduce"
+        },
+        "expert_parallel": {
+            "degree": 4,
+            "num_experts": 128,
+            "experts_per_gpu": 32,
+            "active_experts_per_token": 8,
+            "communication_pattern": "all_to_all"
+        },
+        "attention": {
+            "parallel_mode": "data_parallel",
+            "heads": 32,
+            "kv_heads": 4,
+            "head_dim": 128
+        },
+        "ffn": {
+            "parallel_mode": "expert_parallel",
+            "moe_enabled": true,
+            "hidden_size": 2048,
+            "intermediate_size": 6144,
+            "expert_intermediate_size": 768
+        }
+    },
+    "inference_only": true,
+    "precision": "bfloat16"
+}

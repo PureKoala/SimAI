@@ -9,3 +9,7 @@ test/log/
 .cur*
 .DS_Store
 venv/
+
+etc/
+__pycache__
+simulation_results/
